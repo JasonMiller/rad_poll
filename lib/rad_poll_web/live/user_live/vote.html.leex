@@ -31,7 +31,7 @@
           <td>
             <input name="<%= option.id %>" type="checkbox" phx-click="toggle-vote-for-option" phx-value-option_id="<%= option.id %>" <%= if(Enum.any?(option.votes, & &1.user_id == @user.id), do: "checked") %>>
           </td>
-          <td><%= option.value %></td>
+          <td style="white-space: nowrap"><%= option.value %></td>
           <td style="width: 100%">
             <%= if Enum.any?(option.votes) do %>
               <%= Enum.count(option.votes) %>
