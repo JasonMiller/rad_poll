@@ -7,6 +7,7 @@ defmodule RadPollWeb.UserLive.Vote do
   @impl true
   def mount(%{"id" => poll_id}, session, socket) do
     poll_id = RadPoll.HashId.decode(poll_id)
+    poll = Polls.get_poll!(poll_id)
     user = Users.get_user!(session["user_id"])
     changeset = Users.change_user(user)
 
@@ -18,8 +19,8 @@ defmodule RadPollWeb.UserLive.Vote do
 
     socket =
       socket
-      |> assign(:poll, Polls.get_poll!(poll_id))
-      |> assign(:page_title, "Edit User")
+      |> assign(:poll, poll)
+      |> assign(:page_title, "RadPoll: #{poll.title}")
       |> assign(:user, user)
       |> assign(:changeset, changeset)
 
