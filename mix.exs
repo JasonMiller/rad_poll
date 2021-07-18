@@ -49,7 +49,10 @@ defmodule RadPoll.MixProject do
 
       # init fixes
       {:cowboy, "< 2.8.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+
+      # hash ids
+      {:hashids, "~> 2.0"}
     ]
   end
 

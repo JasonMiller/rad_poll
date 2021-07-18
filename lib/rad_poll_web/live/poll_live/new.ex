@@ -34,7 +34,7 @@ defmodule RadPollWeb.PollLive.New do
         {:noreply,
          socket
          |> put_flash(:info, "Poll created successfully")
-         |> push_redirect(to: Routes.user_vote_path(socket, :vote, poll))}
+         |> push_redirect(to: Routes.user_vote_path(socket, :vote, RadPoll.HashId.encode(poll.id)))}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}

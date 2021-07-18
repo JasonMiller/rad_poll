@@ -6,6 +6,7 @@ defmodule RadPollWeb.UserLive.Vote do
 
   @impl true
   def mount(%{"id" => poll_id}, session, socket) do
+    poll_id = RadPoll.HashId.decode(poll_id)
     user = Users.get_user!(session["user_id"])
     changeset = Users.change_user(user)
 
