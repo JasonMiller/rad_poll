@@ -1,18 +1,21 @@
-defmodule RadPollWeb.PollLive.FormComponent do
-  use RadPollWeb, :live_component
+defmodule RadPollWeb.PollLive.New do
+  use RadPollWeb, :live_view
 
   alias RadPoll.Polls
+  alias RadPoll.Polls.Poll
   alias RadPoll.Options
   alias RadPoll.Options.Option
 
   @impl true
-  def update(%{poll: poll} = assigns, socket) do
-    changeset = Polls.change_poll(poll)
+  def mount(_params, session, socket) do
+    poll = %Poll{options: []}
 
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+    socket =
+      socket
+      |> assign(:poll, poll)
+      |> assign(:changeset, Polls.change_poll(poll))
+
+    {:ok, socket}
   end
 
   @impl true
@@ -26,12 +29,20 @@ defmodule RadPollWeb.PollLive.FormComponent do
   end
 
   def handle_event("save", %{"poll" => poll_params}, socket) do
-    save_poll(socket, socket.assigns.action, poll_params)
+    case Polls.create_poll(poll_params) do
+      {:ok, poll} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Poll created successfully")
+         |> push_redirect(to: Routes.user_vote_path(socket, :vote, poll))}
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        {:noreply, assign(socket, changeset: changeset)}
+    end
   end
 
   def handle_event("add-option", _, socket) do
-    existing_options =
-      Map.get(socket.assigns.changeset.changes, :options, socket.assigns.poll.options)
+    existing_options = Map.get(socket.assigns.changeset.changes, :options, socket.assigns.poll.options)
 
     options =
       existing_options
@@ -63,30 +74,4 @@ defmodule RadPollWeb.PollLive.FormComponent do
 
   # JUST TO GENERATE A RANDOM STRING
   defp get_temp_id, do: :crypto.strong_rand_bytes(5) |> Base.url_encode64() |> binary_part(0, 5)
-
-  defp save_poll(socket, :edit, poll_params) do
-    case Polls.update_poll(socket.assigns.poll, poll_params) do
-      {:ok, _poll} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Poll updated successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, :changeset, changeset)}
-    end
-  end
-
-  defp save_poll(socket, :new, poll_params) do
-    case Polls.create_poll(poll_params) do
-      {:ok, _poll} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Poll created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
-  end
 end

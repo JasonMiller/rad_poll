@@ -19,9 +19,20 @@
       <li>
         <%= option.value %>
         <%= Enum.count(option.votes) %>
-        <%#= unless Enum.any?(option.votes, fn vote -> vote.user_id == @user.id end) do %>
+        <%= unless Enum.any?(option.votes, fn vote -> vote.user_id == @user.id end) do %>
           <a href="#" phx-click="vote-for-option" phx-value-option_id="<%= option.id %>">vote</a>
-        <%# end %>
+        <% end %>
+        <%=
+          option.votes
+          |> Enum.map(fn vote ->
+            if vote.user_id == @user.id do
+              "you"
+            else
+              vote.user.name
+            end
+          end)
+          |> Enum.join(", ")
+        %>
       </li>
     <% end %>
   </ul>

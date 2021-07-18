@@ -18,13 +18,8 @@ defmodule RadPollWeb.Router do
   scope "/", RadPollWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
-
-    live "/polls", PollLive.Index, :index
-    live "/polls/new", PollLive.Index, :new
-    live "/polls/:id/edit", PollLive.Index, :edit
-
-    live "/polls/:id", UserLive.Vote, :vote
+    live "/", PollLive.New, :new
+    live "/:id", UserLive.Vote, :vote
   end
 
   # Other scopes may use custom stacks.

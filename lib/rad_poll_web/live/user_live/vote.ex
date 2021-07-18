@@ -9,6 +9,12 @@ defmodule RadPollWeb.UserLive.Vote do
     user = Users.get_user!(session["user_id"])
     changeset = Users.change_user(user)
 
+    if connected?(socket) do
+      poll_id
+      |> topic
+      |> RadPollWeb.Endpoint.subscribe()
+    end
+
     socket =
       socket
       |> assign(:poll, Polls.get_poll!(poll_id))
@@ -24,9 +30,9 @@ defmodule RadPollWeb.UserLive.Vote do
     poll_id = socket.assigns.poll.id
     poll = Polls.get_poll!(poll_id)
 
-    # poll_id
-    # |> topic
-    # |> RadPollWeb.Endpoint.broadcast("poll:updated", poll)
+    poll_id
+    |> topic
+    |> RadPollWeb.Endpoint.broadcast("poll:updated", poll)
 
     {:noreply, assign(socket, :poll, poll)}
   end
@@ -40,4 +46,18 @@ defmodule RadPollWeb.UserLive.Vote do
         {:noreply, assign(socket, :changeset, changeset)}
     end
   end
+
+  def handle_info(a, b, c), do: raise(a)
+
+  def handle_info(%{topic: message_topic, event: "poll:updated", payload: poll}, socket) do
+    cond do
+      topic(poll.id) == message_topic ->
+        {:noreply, assign(socket, :poll, poll)}
+
+      true ->
+        {:noreply, socket}
+    end
+  end
+
+  defp topic(id), do: "poll:#{id}"
 end

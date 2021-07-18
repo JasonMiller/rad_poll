@@ -7,6 +7,15 @@
 header h1 {
   font-family: 'Permanent Marker';
   text-align: center;
+
+  a {
+    &,
+    &:hover,
+    &:active,
+    &:visited {
+      color: inherit;
+    }
+  }
 }
 
 /* LiveView specific classes for your customizations */
