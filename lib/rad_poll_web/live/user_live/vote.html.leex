@@ -8,29 +8,33 @@
 </form>
 
 <%= if Enum.any?(@poll.options) do %>
-  <ul>
-    <%= for option <- @poll.options do %>
-      <li>
-        <%= option.value %>
-        <%= unless Enum.any?(option.votes, fn vote -> vote.user_id == @user.id end) do %>
-          <a href="#" phx-click="vote-for-option" phx-value-option_id="<%= option.id %>">vote</a>
-        <% end %>
-        <%= if Enum.any?(option.votes) do %>
-          <%= Enum.count(option.votes) %>
-          <%= ngettext("vote", "votes", Enum.count(option.votes)) %>
-          <%=
-            option.votes
-            |> Enum.map(fn vote ->
-              if vote.user_id == @user.id do
-                "you"
-              else
-                vote.user.name
-              end
-            end)
-            |> Enum.join(", ")
-          %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+  <table>
+    <tbody>
+      <%= for option <- @poll.options do %>
+        <tr>
+          <td><%= option.value %></td>
+          <td>
+            <input name="<%= option.id %>" type="checkbox" phx-click="toggle-vote-for-option" phx-value-option_id="<%= option.id %>" <%= if(Enum.any?(option.votes, & &1.user_id == @user.id), do: "checked") %>>
+          </td>
+          <td style="width: 100%">
+            <%= if Enum.any?(option.votes) do %>
+              <%= Enum.count(option.votes) %>
+              <%= ngettext("vote", "votes", Enum.count(option.votes)) %>
+              <%=
+                option.votes
+                |> Enum.map(fn vote ->
+                  if vote.user_id == @user.id do
+                    "you"
+                  else
+                    vote.user.name
+                  end
+                end)
+                |> Enum.join(", ")
+              %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>

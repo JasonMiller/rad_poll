@@ -37,6 +37,10 @@ defmodule RadPoll.Votes do
   """
   def get_vote!(id), do: Repo.get!(Vote, id)
 
+  def get_vote_by_user_id_and_option_id(user_id, option_id) do
+    Repo.get_by(Vote, user_id: user_id, option_id: option_id)
+  end
+
   @doc """
   Creates a vote.
 

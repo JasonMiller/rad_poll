@@ -7,21 +7,87 @@
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
 
-  <%= inputs_for f, :options, fn o -> %>
-    <%= label o, :value %>
-    <%= text_input o, :value %>
-    <%= error_tag o, :value %>
+  <style>
+    table {
+      margin-bottom: 0
+    }
 
-    <%= label o, :delete %><br>
-    <%= if is_nil(o.data.temp_id) do %>
-      <%= checkbox o, :delete %>
-    <% else %>
-      <%= hidden_input o, :temp_id %>
-      <a href="#" phx-click="remove-option" phx-value-remove="<%= o.data.temp_id %>">remove</a>
-    <% end %>
-  <% end %>
+    tbody {
+      counter-reset: options;
+    }
 
-  <a href="#" phx-click="add-option">Add An option</a>
+    tr {
+      counter-increment: options;
+    }
 
-  <%= submit "Save", phx_disable_with: "Saving..." %>
+    td.label {
+      white-space: nowrap;
+    }
+
+    td.label::after {
+      content: " " counter(options);
+    }
+
+    td.input {
+      width: 100%;
+    }
+
+    td input,
+    td button {
+      margin-bottom: 0;
+    }
+
+    .buttons {
+      margin-top: 1.2rem;
+    }
+
+    @media only screen and (max-width: 600px) {
+      td {
+        display: block;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      td .invalid-feedback {
+        margin: 0;
+      }
+
+      td.label,
+      td.input {
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      td.input {
+        padding-top: 0;
+      }
+    }
+  </style>
+
+  <table>
+    <tbody>
+      <%= inputs_for f, :options, fn o -> %>
+        <tr>
+          <td class="label">Option</td>
+          <td class="input">
+            <%= hidden_input o, :temp_id %>
+
+            <div style="display: flex">
+              <%= text_input o, :value %>
+            </div>
+            <%= error_tag o, :value %>
+          </td>
+          <td class="remove">
+              <button href="#" class="button-outline" phx-click="remove-option" phx-value-remove="<%= o.data.temp_id %>">remove</button>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="buttons">
+    <button class="button-outline" href="#" phx-click="add-option">Add An option</button class="button-outline">
+
+    <%= submit "Save", phx_disable_with: "Saving..." %>
+  </div>
 </form>
