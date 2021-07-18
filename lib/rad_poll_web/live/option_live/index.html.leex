@@ -1,0 +1,35 @@
+<h1>Listing Options</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, RadPollWeb.OptionLive.FormComponent,
+    id: @option.id || :new,
+    title: @page_title,
+    action: @live_action,
+    option: @option,
+    return_to: Routes.option_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="options">
+    <%= for option <- @options do %>
+      <tr id="option-<%= option.id %>">
+        <td><%= option.value %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.option_show_path(@socket, :show, option) %></span>
+          <span><%= live_patch "Edit", to: Routes.option_index_path(@socket, :edit, option) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: option.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Option", to: Routes.option_index_path(@socket, :new) %></span>

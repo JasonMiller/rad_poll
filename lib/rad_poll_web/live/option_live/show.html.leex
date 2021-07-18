@@ -1,0 +1,22 @@
+<h1>Show Option</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, RadPollWeb.OptionLive.FormComponent,
+    id: @option.id,
+    title: @page_title,
+    action: @live_action,
+    option: @option,
+    return_to: Routes.option_show_path(@socket, :show, @option) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Value:</strong>
+    <%= @option.value %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.option_show_path(@socket, :edit, @option), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.option_index_path(@socket, :index) %></span>
