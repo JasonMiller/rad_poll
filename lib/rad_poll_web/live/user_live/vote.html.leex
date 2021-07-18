@@ -20,19 +20,15 @@
 <%= if Enum.any?(@poll.options) do %>
   <table>
     <thead>
-      <tr>
-        <th colspan=2>Option</th>
-        <th>Votes</th>
-      </tr>
     </thead>
     <tbody>
       <%= for option <- @poll.options do %>
         <tr>
-          <td>
+          <td style="width:0%">
             <input name="<%= option.id %>" type="checkbox" phx-click="toggle-vote-for-option" phx-value-option_id="<%= option.id %>" <%= if(Enum.any?(option.votes, & &1.user_id == @user.id), do: "checked") %>>
           </td>
-          <td style="white-space: nowrap"><%= option.value %></td>
-          <td style="width: 100%">
+          <td><%= option.value %></td>
+          <td>
             <%= if Enum.any?(option.votes) do %>
               <%= Enum.count(option.votes) %>
               <%= ngettext("vote", "votes", Enum.count(option.votes)) %>:
@@ -42,7 +38,15 @@
                   if vote.user_id == @user.id do
                     "you"
                   else
-                    vote.user.name
+                    vote.user.name || "guest"
+                  end
+                end)
+                |> Enum.group_by(& &1)
+                |> Enum.map(fn {name, votes} ->
+                  if (count = Enum.count(votes)) > 1 do
+                    "#{name} (#{count})"
+                  else
+                    name
                   end
                 end)
                 |> Enum.join(", ")
