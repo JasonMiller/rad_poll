@@ -1,38 +1,35 @@
+<h1><%= @poll.title %></h1>
+
 <%= f = form_for @changeset, "#", id: "user-form" %>
 
-  <%= label f, :name %>
+  <%= label f, :name, "who dis?" %>
   <%= text_input f, :name, phx_blur: "change-name", value: @user.name %>
   <%= error_tag f, :name %>
 </form>
-
-
-<ul>
-  <li>
-    <strong>Title:</strong>
-    <%= @poll.title %>
-  </li>
-</ul>
 
 <%= if Enum.any?(@poll.options) do %>
   <ul>
     <%= for option <- @poll.options do %>
       <li>
         <%= option.value %>
-        <%= Enum.count(option.votes) %>
         <%= unless Enum.any?(option.votes, fn vote -> vote.user_id == @user.id end) do %>
           <a href="#" phx-click="vote-for-option" phx-value-option_id="<%= option.id %>">vote</a>
         <% end %>
-        <%=
-          option.votes
-          |> Enum.map(fn vote ->
-            if vote.user_id == @user.id do
-              "you"
-            else
-              vote.user.name
-            end
-          end)
-          |> Enum.join(", ")
-        %>
+        <%= if Enum.any?(option.votes) do %>
+          <%= Enum.count(option.votes) %>
+          <%= ngettext("vote", "votes", Enum.count(option.votes)) %>
+          <%=
+            option.votes
+            |> Enum.map(fn vote ->
+              if vote.user_id == @user.id do
+                "you"
+              else
+                vote.user.name
+              end
+            end)
+            |> Enum.join(", ")
+          %>
+        <% end %>
       </li>
     <% end %>
   </ul>
