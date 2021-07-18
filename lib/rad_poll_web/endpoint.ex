@@ -26,7 +26,8 @@ defmodule RadPollWeb.Endpoint do
     at: "/",
     from: :rad_poll,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only:
+      ~w(css fonts images js site.webmanifest android-chrome-192x192.png android-chrome-512x512.png apple-touch-icon.png favicon-16x16.png favicon-32x32.png favicon.ico mstile-150x150.png safari-pinned-tab.svg robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
