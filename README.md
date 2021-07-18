@@ -20,3 +20,4 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 mix phx.gen.live Polls Poll polls title:string
 mix phx.gen.live Options Option options value:string
 mix phx.gen.live Votes Vote votes option_id:integer
+mix phx.gen.live Users User users name:string session_id:string

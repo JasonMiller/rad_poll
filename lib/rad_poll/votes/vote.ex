@@ -4,6 +4,7 @@ defmodule RadPoll.Votes.Vote do
 
   schema "votes" do
     belongs_to :option, RadPoll.Options.Option
+    belongs_to :user, RadPoll.Users.User
 
     timestamps()
   end
@@ -11,7 +12,7 @@ defmodule RadPoll.Votes.Vote do
   @doc false
   def changeset(vote, attrs) do
     vote
-    |> cast(attrs, [:option_id])
-    |> validate_required([:option_id])
+    |> cast(attrs, [:option_id, :user_id])
+    |> validate_required([:option_id, :user_id])
   end
 end

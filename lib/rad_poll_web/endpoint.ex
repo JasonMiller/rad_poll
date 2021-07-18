@@ -7,7 +7,9 @@ defmodule RadPollWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_rad_poll_key",
-    signing_salt: "7Bq6S39E"
+    signing_salt: "7Bq6S39E",
+    # 30 days
+    max_age: 60 * 60 * 24 * 30
   ]
 
   socket "/socket", RadPollWeb.UserSocket,

@@ -8,6 +8,7 @@ defmodule RadPollWeb.Router do
     plug :put_root_layout, {RadPollWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug RadPollWeb.UserPlug
   end
 
   pipeline :api do
@@ -23,15 +24,7 @@ defmodule RadPollWeb.Router do
     live "/polls/new", PollLive.Index, :new
     live "/polls/:id/edit", PollLive.Index, :edit
 
-    live "/polls/:id", PollLive.Show, :show
-    live "/polls/:id/show/edit", PollLive.Show, :edit
-
-    live "/options", OptionLive.Index, :index
-    live "/options/new", OptionLive.Index, :new
-    live "/options/:id/edit", OptionLive.Index, :edit
-
-    live "/options/:id", OptionLive.Show, :show
-    live "/options/:id/show/edit", OptionLive.Show, :edit
+    live "/polls/:id", UserLive.Vote, :vote
   end
 
   # Other scopes may use custom stacks.

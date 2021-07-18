@@ -10,7 +10,7 @@ defmodule RadPollWeb.PollLive.Show do
     |> topic
     |> RadPollWeb.Endpoint.subscribe()
 
-    {:ok, socket}
+    {:ok, assign(socket, :user_id, session.user_id)}
   end
 
   @impl true
@@ -22,7 +22,7 @@ defmodule RadPollWeb.PollLive.Show do
   end
 
   def handle_event("vote-for-option", %{"option_id" => option_id}, socket) do
-    Votes.create_vote(%{option_id: option_id})
+    Votes.create_vote(%{option_id: option_id, user_id: socket.assigns.user_id})
     poll_id = socket.assigns.poll.id
     poll = Polls.get_poll!(poll_id)
 
