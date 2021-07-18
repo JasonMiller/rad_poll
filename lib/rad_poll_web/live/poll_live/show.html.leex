@@ -18,5 +18,17 @@
 
 </ul>
 
+<%= if Enum.any?(@poll.options) do %>
+  <ul>
+    <%= for option <- @poll.options do %>
+      <li>
+        <%= option.value %>
+        <%= Enum.count(option.votes) %>
+        <a href="#" phx-click="vote-for-option" phx-value-option_id="<%= option.id %>">vote</a>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
 <span><%= live_patch "Edit", to: Routes.poll_show_path(@socket, :edit, @poll), class: "button" %></span>
 <span><%= live_redirect "Back", to: Routes.poll_index_path(@socket, :index) %></span>

@@ -39,8 +39,9 @@ defmodule RadPoll.Polls do
     query =
       from poll in Poll,
         left_join: options in assoc(poll, :options),
+        left_join: votes in assoc(options, :votes),
         order_by: [desc: options.inserted_at],
-        preload: [options: options]
+        preload: [options: {options, votes: votes}]
 
     Repo.one(query)
   end

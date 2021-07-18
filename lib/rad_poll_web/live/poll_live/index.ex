@@ -5,7 +5,7 @@ defmodule RadPollWeb.PollLive.Index do
   alias RadPoll.Polls.Poll
 
   @impl true
-  def mount(_params, _session, socket) do
+  def mount(_params, session, socket) do
     {:ok, assign(socket, :polls, list_polls())}
   end
 

@@ -4,6 +4,7 @@ defmodule RadPoll.Options.Option do
 
   schema "options" do
     belongs_to(:poll, RadPoll.Polls.Poll)
+    has_many(:votes, RadPoll.Votes.Vote)
 
     field :value, :string
 

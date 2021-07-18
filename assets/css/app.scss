@@ -2,6 +2,13 @@
 @import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+header h1 {
+  font-family: 'Permanent Marker';
+  text-align: center;
+}
+
 /* LiveView specific classes for your customizations */
 .invalid-feedback {
   color: #a94442;
