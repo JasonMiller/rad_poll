@@ -17,6 +17,22 @@
     <%= label f, :type, "Date & Time", class: "button button-outline", for: "poll-form_type_datetime" %>
   </div>
 
+  <div class="table table--counter table--middle-fill">
+      <%= inputs_for f, :options, fn o -> %>
+          <div class="table-cell" data-label="Option"></div>
+          <div class="table-cell">
+            <div>
+            <%= hidden_input o, :temp_id %>
+            <%= text_input o, :value %>
+            <%= error_tag o, :value %>
+            </div>
+          </div>
+          <div class="table-cell">
+              <button href="#" class="button-outline" phx-click="remove-option" phx-value-remove="<%= o.data.temp_id %>">remove</button>
+          </div>
+      <% end %>
+  </div>
+
   <table class="counter-table">
     <tbody>
       <%= inputs_for f, :options, fn o -> %>

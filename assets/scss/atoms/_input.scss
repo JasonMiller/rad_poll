@@ -14,7 +14,9 @@ input[type=text] {
   box-shadow: none;
   box-sizing: inherit;
 
-  @at-root td & {
+  @at-root
+    td &,
+    .table-cell & {
     margin-bottom: 0;
   }
 }
