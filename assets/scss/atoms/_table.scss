@@ -1,0 +1,49 @@
+table {
+  width: 100%;
+
+  tbody {
+    width: 100%;
+  }
+
+  td, th {
+    border-bottom: .1rem solid #e1e1e1;
+    padding: $table-cell-padding;
+    text-align: left;
+
+    &:first-child {
+      padding-left: 0;
+    }
+  }
+}
+
+.counter-table {
+  tbody {
+    counter-reset: counter;
+  }
+
+  tr {
+    counter-increment: counter;
+  }
+
+  td[data-label] {
+    white-space: nowrap;
+  }
+
+  td[data-label]::after {
+    content: attr(data-label) " " counter(counter);
+  }
+}
+
+
+@media only screen and (max-width: 600px) {
+  td {
+    display: block;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  td:not(:last-of-type) {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+}

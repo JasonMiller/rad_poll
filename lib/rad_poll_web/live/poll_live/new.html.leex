@@ -3,72 +3,25 @@
   phx_change: "validate",
   phx_submit: "save" %>
 
-  <%= label f, :title %>
+  <%= label f, :title, "Poll Title" %>
   <%= text_input f, :title %>
   <%= error_tag f, :title %>
 
-  <style>
-    table {
-      margin-bottom: 0
-    }
+  <%= label f, :type, "Poll Type" %>
+  <div class="radio-group">
+    <%= radio_button f, :type, "text" %>
+    <%= label f, :type, "Text", class: "button button-outline", for: "poll-form_type_text" %>
+    <%= radio_button f, :type, "date" %>
+    <%= label f, :type, "Date", class: "button button-outline", for: "poll-form_type_date" %>
+    <%= radio_button f, :type, "datetime" %>
+    <%= label f, :type, "Date & Time", class: "button button-outline", for: "poll-form_type_datetime" %>
+  </div>
 
-    tbody {
-      counter-reset: options;
-    }
-
-    tr {
-      counter-increment: options;
-    }
-
-    td.label {
-      white-space: nowrap;
-    }
-
-    td.label::after {
-      content: " " counter(options);
-    }
-
-    td.input {
-      width: 100%;
-    }
-
-    td input,
-    td button {
-      margin-bottom: 0;
-    }
-
-    td .invalid-feedback {
-      margin: 0;
-    }
-
-    .buttons {
-      margin-top: 1.2rem;
-    }
-
-    @media only screen and (max-width: 600px) {
-      td {
-        display: block;
-        padding-left: 0;
-        padding-right: 0;
-      }
-
-      td.label,
-      td.input {
-        padding-bottom: 0;
-        border-bottom: none;
-      }
-
-      td.input {
-        padding-top: 0;
-      }
-    }
-  </style>
-
-  <table>
+  <table class="counter-table">
     <tbody>
       <%= inputs_for f, :options, fn o -> %>
         <tr>
-          <td class="label">Option</td>
+          <td class="label" data-label="Option"></td>
           <td class="input">
             <%= hidden_input o, :temp_id %>
 

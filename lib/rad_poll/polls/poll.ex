@@ -6,6 +6,7 @@ defmodule RadPoll.Polls.Poll do
     has_many(:options, RadPoll.Options.Option)
 
     field :title, :string
+    field :type, :string, virtual: true
 
     timestamps()
   end

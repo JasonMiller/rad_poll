@@ -1,0 +1,53 @@
+.radio-group {
+  display: flex;
+  margin-bottom: $control-margin-bottom;
+
+  input {
+    position: absolute;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  input:checked + .button {
+    background-color: $primary;
+    color: #fff;
+  }
+
+  .button {
+    position: relative;
+    border-radius: 0;
+
+    &:first-of-type {
+      border-top-left-radius: $control-radius;
+      border-bottom-left-radius: $control-radius;
+    }
+
+    &:last-of-type {
+      border-top-right-radius: $control-radius;
+      border-bottom-right-radius: $control-radius;
+    }
+  }
+
+  .button ~ .button {
+    border-left: none;
+
+    &::before {
+      $or-dim: 2.2rem;
+
+      content: "or";
+      position: absolute;
+      left: -($or-dim / 2);
+      top: (($control-height - $or-dim) / 2);
+
+      width: $or-dim;
+      height: $or-dim;
+      background-color: #fff;
+      border: solid 1px $primary;
+
+      font-size: 0.75em;
+      color: $primary;
+      line-height: $or-dim;
+      border-radius: 50%;
+    }
+  }
+}

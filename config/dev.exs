@@ -23,6 +23,17 @@ config :rad_poll, RadPollWeb.Endpoint,
   check_origin: false,
   watchers: [
     node: [
+      "node_modules/sass/sass.js",
+      "--no-source-map",
+      [
+        Path.expand("../assets/scss", __DIR__),
+        Path.expand("../priv/static/css", __DIR__)
+      ]
+      |> Enum.join(":"),
+      "--watch",
+      cd: Path.expand("../assets", __DIR__)
+    ],
+    node: [
       "node_modules/webpack/bin/webpack.js",
       "--mode",
       "development",

@@ -1,29 +1,18 @@
 /* This file is for your main application css. */
-@import "./phoenix.css";
 @import "../node_modules/nprogress/nprogress.css";
 
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+@import "./vendor/reset.css";
 
-header h1 {
-  font-family: 'Permanent Marker';
-  text-align: center;
+@import "./variables/settings";
+@import "./base";
 
-  a {
-    &,
-    &:hover,
-    &:active,
-    &:visited {
-      color: inherit;
-    }
-  }
-}
+@import "./atoms/button";
+@import "./atoms/input";
+@import "./atoms/invalid_feedback";
+@import "./atoms/table";
 
-/* LiveView specific classes for your customizations */
-.invalid-feedback {
-  color: #a94442;
-  display: block;
-  margin: -1rem 0 2rem;
-}
+@import "./molecules/buttons";
+@import "./molecules/radio_group";
 
 .phx-no-feedback.invalid-feedback, .phx-no-feedback .invalid-feedback {
   display: none;

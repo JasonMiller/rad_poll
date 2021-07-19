@@ -1,0 +1,30 @@
+button,
+.button {
+  display: inline-block;
+  height: $control-height;
+  padding: 0 3rem;
+
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: .1rem;
+  line-height: $control-height;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  background-color: $primary;
+  border: .1rem solid $primary;
+  border-radius: .4rem;
+
+  cursor: pointer;
+  transition-property: color, background-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
+
+  &.button-outline {
+    background-color: #fff;
+    color: $primary;
+  }
+}
