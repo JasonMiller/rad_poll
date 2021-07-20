@@ -1,13 +1,3 @@
-<style>
-  th {
-    padding-top: 0;
-  }
-
-  td input {
-    margin: 0;
-  }
-</style>
-
 <h2><%= @poll.title %></h2>
 
 <%= f = form_for @changeset, "#", id: "user-form" %>
@@ -18,7 +8,7 @@
 </form>
 
 <%= if Enum.any?(@poll.options) do %>
-  <div class="table table--last-fill" data-cols="3">
+  <div class="table table--vote" data-cols="3">
     <%= for option <- @poll.options do %>
       <div class="table-cell">
         <input name="<%= option.id %>" type="checkbox" phx-click="toggle-vote-for-option" phx-value-option_id="<%= option.id %>" <%= if(Enum.any?(option.votes, & &1.user_id == @user.id), do: "checked") %>>
@@ -55,48 +45,4 @@
       </div>
     <% end %>
   </div>
-<% end %>
-
-<%= if Enum.any?(@poll.options) do %>
-  <table>
-    <thead>
-    </thead>
-    <tbody>
-      <%= for option <- @poll.options do %>
-        <tr>
-          <td style="width:0%">
-            <input name="<%= option.id %>" type="checkbox" phx-click="toggle-vote-for-option" phx-value-option_id="<%= option.id %>" <%= if(Enum.any?(option.votes, & &1.user_id == @user.id), do: "checked") %>>
-          </td>
-          <td><%= option.value %></td>
-          <td>
-            <%= if Enum.any?(option.votes) do %>
-              <%= Enum.count(option.votes) %>
-              <%= ngettext("vote", "votes", Enum.count(option.votes)) %>:
-              <%=
-                option.votes
-                |> Enum.map(fn vote ->
-                  if vote.user_id == @user.id do
-                    "you"
-                  else
-                    vote.user.name || "guest"
-                  end
-                end)
-                |> Enum.group_by(& &1)
-                |> Enum.map(fn {name, votes} ->
-                  if (count = Enum.count(votes)) > 1 do
-                    "#{name} (#{count})"
-                  else
-                    name
-                  end
-                end)
-                |> Enum.join(", ")
-              %>
-            <% else %>
-              <span style="color: lightgrey">no votes yet</span>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
 <% end %>

@@ -5,21 +5,12 @@
 
   justify-items: start;
   align-items: center;
-
-  &--last-fill {
-    grid-template-columns: repeat(2, max-content) 1fr;
-  }
-
-  &--middle-fill {
-    grid-template-columns: max-content 1fr max-content;
-  }
 }
 
 .table-cell {
   position: relative;
   justify-self: stretch;
-  // align-self: stretch;
-// border-bottom: 1px solid #000;
+
   padding: $table-cell-padding;
 
   &:nth-of-type(3n - 2) {
@@ -39,12 +30,14 @@
       display: block;
       height: 1px;
       width: 10000px;
-      background-color: red;
+      background-color: $table-border-color;
     }
   }
 }
 
-.table--counter {
+.table--new {
+  grid-template-columns: max-content 1fr max-content;
+
   counter-reset: counter;
 
   .table-cell:nth-of-type(3n - 2) {
@@ -57,52 +50,41 @@
   }
 }
 
-table {
-  width: 100%;
+.table--vote {
+  grid-template-columns: repeat(2, max-content) 1fr;
+}
 
-  tbody {
-    width: 100%;
-  }
+@include breakpoint(mobile) {
+  .table--new {
+    grid-template-columns: 1fr;
 
-  td, th {
-    border-bottom: .1rem solid #e1e1e1;
-    padding: $table-cell-padding;
-    text-align: left;
-
-    &:first-child {
+    .table-cell {
       padding-left: 0;
+      padding-right: 0;
+
+      &:nth-of-type(3n - 1),
+      &:nth-of-type(3n - 2) {
+        padding-bottom: 0;
+      }
     }
   }
-}
 
-.counter-table {
-  tbody {
-    counter-reset: counter;
-  }
+  .table--vote {
+    grid-template-columns: repeat(2, max-content);
 
-  tr {
-    counter-increment: counter;
-  }
+    .table-cell:nth-of-type(3n - 2) {
+      grid-column-start: 2;
+    }
 
-  td[data-label] {
-    white-space: nowrap;
-  }
+    .table-cell:nth-of-type(3n - 1),
+    .table-cell:nth-of-type(3n - 2) {
+      padding-bottom: 0;
+    }
 
-  td[data-label]::after {
-    content: attr(data-label) " " counter(counter);
-  }
-}
+    .table-cell:nth-of-type(3n) {
+      grid-column-start: -1;
 
-
-@media only screen and (max-width: 600px) {
-  td {
-    display: block;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  td:not(:last-of-type) {
-    padding-bottom: 0;
-    border-bottom: none;
+      padding-top: 0;
+    }
   }
 }

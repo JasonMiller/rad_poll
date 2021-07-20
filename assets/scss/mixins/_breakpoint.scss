@@ -1,0 +1,5 @@
+@mixin breakpoint($size: mobile) {
+  @media only screen and (max-width: $main-max-width) {
+    @content;
+  }
+}

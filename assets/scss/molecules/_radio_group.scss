@@ -29,9 +29,9 @@
   }
 
   .button ~ .button {
-    border-left: none;
-
     $or-dim: 2.2rem;
+
+    margin-left: -1px;
 
     &::before {
       content: "or";
@@ -50,11 +50,11 @@
       border-radius: 50%;
     }
 
-
     &:hover,
     &:focus,
     &:active {
       &::before {
+        margin-left: -1px;
         top: calc(#{($control-height - $or-dim) / 2} - 1px);
       }
     }

@@ -17,42 +17,21 @@
     <%= label f, :type, "Date & Time", class: "button button-outline", for: "poll-form_type_datetime" %>
   </div>
 
-  <div class="table table--counter table--middle-fill">
-      <%= inputs_for f, :options, fn o -> %>
-          <div class="table-cell" data-label="Option"></div>
-          <div class="table-cell">
-            <div class="field">
-              <%= hidden_input o, :temp_id %>
-              <%= text_input o, :value, required: true %>
-              <%= error_tag o, :value %>
-            </div>
-          </div>
-          <div class="table-cell">
-              <button href="#" class="button-outline" phx-click="remove-option" phx-value-remove="<%= o.data.temp_id %>">remove</button>
-          </div>
-      <% end %>
+  <div class="table table--new">
+    <%= inputs_for f, :options, fn o -> %>
+      <div class="table-cell" data-label="Option"></div>
+      <div class="table-cell">
+        <div class="field">
+          <%= hidden_input o, :temp_id %>
+          <%= text_input o, :value, required: true %>
+          <%= error_tag o, :value %>
+        </div>
+      </div>
+      <div class="table-cell">
+          <button href="#" class="button-outline" phx-click="remove-option" phx-value-remove="<%= o.data.temp_id %>">remove</button>
+      </div>
+    <% end %>
   </div>
-
-  <table class="counter-table">
-    <tbody>
-      <%= inputs_for f, :options, fn o -> %>
-        <tr>
-          <td class="label" data-label="Option"></td>
-          <td class="input">
-            <%= hidden_input o, :temp_id %>
-
-            <div style="display: flex">
-              <%= text_input o, :value %>
-            </div>
-            <%= error_tag o, :value %>
-          </td>
-          <td class="remove">
-              <button href="#" class="button-outline" phx-click="remove-option" phx-value-remove="<%= o.data.temp_id %>">remove</button>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
 
   <div class="buttons">
     <button class="button-outline" href="#" phx-click="add-option">Add An option</button class="button-outline">

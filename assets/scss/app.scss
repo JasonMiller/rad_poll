@@ -4,11 +4,13 @@
 @import "./vendor/reset.css";
 
 @import "./variables/settings";
+@import "./mixins/breakpoint";
 @import "./base";
 
 @import "./atoms/button";
 @import "./atoms/input";
 @import "./atoms/invalid_feedback";
+@import "./atoms/main";
 @import "./atoms/table";
 
 @import "./molecules/buttons";
