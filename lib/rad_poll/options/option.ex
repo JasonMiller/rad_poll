@@ -19,7 +19,7 @@ defmodule RadPoll.Options.Option do
     option
     |> Map.put(:temp_id, option.temp_id || attrs["temp_id"])
     |> cast(attrs, [:value, :delete])
-    |> validate_required([:value])
+    |> validate_required([:value], message: "*required")
     |> maybe_mark_for_deletion()
   end
 

@@ -2,7 +2,7 @@ button,
 .button {
   display: inline-block;
   height: $control-height;
-  padding: 0 3rem;
+  padding: 0 $button-padding-horizontal;
 
   color: #fff;
   font-size: 1.1rem;
@@ -15,6 +15,7 @@ button,
   white-space: nowrap;
 
   background-color: $primary;
+  outline: 0;
   border: .1rem solid $primary;
   border-radius: .4rem;
 
@@ -22,6 +23,14 @@ button,
   transition-property: color, background-color;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-width: 2px;
+    padding: 0 calc(#{$button-padding-horizontal} - 1px);
+    line-height: calc(#{$control-height} - 2px);
+  }
 
   &.button-outline {
     background-color: #fff;
